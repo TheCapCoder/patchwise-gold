@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Members Hub</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="description" content="Members hub: weekly briefings and archive." />
+
+  <style>
+    :root{
+      --bg0:#070A10;
+      --bg1:#0B1020;
+      --panel: rgba(255,255,255,0.06);
+      --panel2: rgba(255,255,255,0.08);
+      --stroke: rgba(255,255,255,0.12);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.70);
+      --muted2: rgba(255,255,255,0.55);
+
+      --accent:#6EE7FF;
+      --accent2:#A78BFA;
+      --good:#34D399;
+      --warn:#FBBF24;
+
+      --shadow: 0 18px 60px rgba(0,0,0,0.55);
+      --shadow2: 0 10px 28px rgba(0,0,0,0.45);
+
+      --radius: 18px;
+      --radius2: 14px;
+
+      --max: 1120px;
+      --pad: clamp(18px, 3.2vw, 30px);
+      --gap: clamp(14px, 2.2vw, 22px);
+
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(167,139,250,0.22), transparent 60%),
+        radial-gradient(900px 520px at 80% 18%, rgba(110,231,255,0.18), transparent 60%),
+        radial-gradient(900px 600px at 55% 100%, rgba(52,211,153,0.10), transparent 58%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding: 0 var(--pad);}
+    header{
+      position:sticky;
+      top:0;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(7,10,16,0.75), rgba(7,10,16,0.35));
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      z-index:20;
+    }
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding: 14px 0;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:900;
+      letter-spacing:0.3px;
+    }
+    .brand-badge{
+      width:36px; height:36px;
+      border-radius:12px;
+      background: linear-gradient(135deg, rgba(110,231,255,0.16), rgba(167,139,250,0.18));
+      border:1px solid rgba(255,255,255,0.14);
+      display:grid; place-items:center;
+      box-shadow: var(--shadow2);
+    }
+    nav ul{list-style:none; margin:0; padding:0; display:flex; gap:16px; flex-wrap:wrap}
+    nav a{text-decoration:none; color:var(--muted); font-weight:800; font-size:0.95rem}
+    nav a:hover{color:var(--text)}
+    .btn{
+      appearance:none; border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color:var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight:900;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.30);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      cursor:pointer;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.08);
+    }
+    .btn-primary{
+      border:none;
+      background: linear-gradient(135deg, rgba(110,231,255,0.95), rgba(167,139,250,0.95));
+      color: rgba(7,10,16,0.95);
+    }
+
+    main{padding: 26px 0 54px}
+    section{padding: 22px 0}
+    .section-head{display:flex; justify-content:space-between; align-items:end; gap:12px; margin-bottom: 14px}
+    .section-head h2{margin:0; font-size: clamp(1.25rem, 2.2vw, 1.7rem); letter-spacing:-0.01em}
+    .section-head p{margin:0; color:var(--muted); max-width: 72ch; line-height:1.45}
+
+    .grid-3{display:grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap);}
+    .grid-2{display:grid; grid-template-columns: 1fr 1fr; gap: var(--gap);}
+    @media (max-width: 980px){
+      .grid-3,.grid-2{grid-template-columns: 1fr;}
+    }
+
+    .card{
+      background: rgba(255,255,255,0.055);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow2);
+    }
+    .card h3{margin: 0 0 8px; font-size:1.05rem}
+    .card p{margin: 0; color:var(--muted); line-height:1.55}
+
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      font-weight:900;
+      font-size:0.85rem;
+    }
+    .tagrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .tag{
+      padding: 6px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:0.82rem;
+      color: rgba(7,10,16,0.92);
+      background: linear-gradient(135deg, rgba(110,231,255,0.95), rgba(167,139,250,0.85));
+    }
+    .tag.alt{
+      background: rgba(255,255,255,0.08);
+      color: var(--muted);
+      border:1px solid rgba(255,255,255,0.12);
+    }
+
+    .combo-top{display:flex; align-items:center; gap:12px; margin-bottom:10px}
+    .ico{
+      width:46px; height:46px;
+      border-radius:16px;
+      background: rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.14);
+      display:grid; place-items:center;
+      font-weight:900;
+    }
+    .meta b{display:block; font-size:1.05rem}
+    .meta span{display:block; color:var(--muted2); font-weight:900; font-size:0.9rem; margin-top:2px}
+
+    .list{margin: 10px 0 0; padding-left: 18px; color: var(--muted); line-height:1.55}
+    .muted{color: var(--muted2)}
+
+    /* Gate */
+    .gate-wrap{
+      min-height: 70vh;
+      display:grid;
+      place-items:center;
+      padding: 36px 0 60px;
+    }
+    .gate{
+      width:min(640px, 100%);
+      background: rgba(255,255,255,0.055);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .gate h1{
+      margin:0 0 8px;
+      font-size: clamp(1.5rem, 3.8vw, 2.0rem);
+      letter-spacing:-0.02em;
+    }
+    .gate p{margin:0; color:var(--muted); line-height:1.55}
+    .field{
+      display:flex;
+      gap:10px;
+      margin-top: 14px;
+      flex-wrap:wrap;
+    }
+    input{
+      flex: 1 1 220px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.25);
+      color: var(--text);
+      font-weight:800;
+      outline:none;
+    }
+    input::placeholder{color: rgba(255,255,255,0.40)}
+    .err{margin-top:10px; color: rgba(251,191,36,0.9); font-weight:900; display:none}
+    .ok{margin-top:10px; color: rgba(52,211,153,0.92); font-weight:900; display:none}
+
+    footer{
+      padding: 20px 0 40px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted2);
+      font-size:0.92rem;
+      line-height:1.45;
+    }
+  </style>
+</head>
+
+<body>
+  <header id="topbar" style="display:none;">
+    <div class="wrap">
+      <div class="nav">
+        <div class="brand">
+          <div class="brand-badge" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24">
+              <path fill="white" d="M12 2l4 8-4 12-4-12z"/>
+            </svg>
+          </div>
+          <span id="brandName">Members Hub</span>
+          <span class="pill" id="weekPill">Week</span>
+        </div>
+
+        <nav aria-label="Members navigation">
+          <ul>
+            <li><a href="#weekly">Weekly Drop</a></li>
+            <li><a href="#watch">Market Watch</a></li>
+            <li><a href="#archive">Archive</a></li>
+          </ul>
+        </nav>
+
+        <div style="display:flex; gap:10px; align-items:center">
+          <a class="btn" id="discordBtn" href="#" target="_blank" rel="noopener">Discord</a>
+          <button class="btn" id="logoutBtn" type="button">Lock</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Gate screen -->
+  <div class="wrap gate-wrap" id="gateScreen">
+    <div class="gate">
+      <h1 id="gateTitle">Enter monthly access key</h1>
+      <p id="gateDesc">
+        This hub uses a rotating monthly key. If you don’t have it, go to the Thank You page and submit the access form.
+      </p>
+
+      <div class="field">
+        <input id="keyInput" type="password" inputmode="text" placeholder="Example: PW-DEC-2025" autocomplete="off" />
+        <button class="btn btn-primary" id="unlockBtn" type="button">Unlock</button>
+        <a class="btn" href="./thanks.html">Access steps</a>
+      </div>
+
+      <div class="err" id="errMsg">Wrong key. Double-check spacing/caps.</div>
+      <div class="ok" id="okMsg">Unlocked. Loading hub…</div>
+
+      <p class="muted" style="margin-top:12px">
+        Tip: after you unlock once, this device stays unlocked until the key rotates.
+      </p>
+    </div>
+  </div>
+
+  <!-- Members hub -->
+  <main class="wrap" id="hub" style="display:none;">
+    <section id="weekly">
+      <div class="section-head">
+        <div>
+          <h2 id="weeklyTitle">Weekly Drop</h2>
+          <p id="weeklyDesc">Small number of high-signal calls. Clear “do / don’t do” guidance. Updated prices every patch/expansion/week.</p>
+        </div>
+      </div>
+
+      <div class="grid-3" id="comboGrid"></div>
+
+      <div class="grid-2" style="margin-top: var(--gap);">
+        <div class="card">
+          <h3 id="worldGoldTitle">World gold snapshot</h3>
+          <p class="muted" id="worldGoldSub">Total gold available from world gold quests + time/value verdict.</p>
+          <div class="tagrow" id="worldGoldTags"></div>
+          <p style="margin-top:10px" id="worldGoldBody"></p>
+          <ul class="list" id="worldGoldList"></ul>
+        </div>
+
+        <div class="card">
+          <h3 id="ahTitle">Auction House high-volume signal</h3>
+          <p class="muted" id="ahSub">Most sold item by quantity + average value context.</p>
+          <div class="tagrow" id="ahTags"></div>
+          <p style="margin-top:10px" id="ahBody"></p>
+          <ul class="list" id="ahList"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="watch">
+      <div class="section-head">
+        <div>
+          <h2 id="watchTitle">Market Watch</h2>
+          <p id="watchDesc">What’s moving, what’s fading, and what to wait on.</p>
+        </div>
+      </div>
+
+      <div class="grid-3" id="watchGrid"></div>
+    </section>
+
+    <section id="archive">
+      <div class="section-head">
+        <div>
+          <h2 id="archiveTitle">Archive</h2>
+          <p id="archiveDesc">Past weekly drops (keep this short at first).</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Past weeks</h3>
+        <ul class="list" id="archiveList"></ul>
+        <p class="muted" style="margin-top:10px" id="archiveNote"></p>
+      </div>
+    </section>
+
+    <footer>
+      <div id="fineprint"></div>
+    </footer>
+  </main>
+
+  <script>
+    /* =========================================================
+       EDIT THIS CONFIG WEEKLY (and rotate CURRENT_KEY monthly)
+    ========================================================== */
+    const CONFIG = {
+      brandName: "PatchWise Gold — Members",
+      discordInviteLink: "https://discord.gg/59n2rxH6",
+
+      // ROTATE THIS MONTHLY (example format you mentioned)
+      currentKey: "PW-DEC-2025",
+
+      // Label shown in header
+      weekLabel: "Week of Dec 25, 2025",
+
+      weekly: {
+        title: "Weekly Drop",
+        desc: "Small number of high-signal calls. Clear “do / don’t do” guidance.",
+
+        combos: [
+          {
+            icon: "🔥",
+            title: "Most popular combo",
+            subtitle: "What most players are leaning into",
+            tags: ["High demand", "Short window"],
+            blurb: "What’s currently hot — plus the one reason it works right now (and the condition that will kill it).",
+            notes: [
+              "Best for: players already set up in crafting.",
+              "Avoid if: you’re starting from zero this week."
+            ]
+          },
+          {
+            icon: "🧠",
+            title: "Lowest effort combo",
+            subtitle: "Efficiency-first",
+            tags: ["Low stress", "Steady"],
+            blurb: "Reliable, calm returns without heavy farming or constant relisting.",
+            notes: [
+              "Best for: limited playtime.",
+              "Goal: consistency > peak profit."
+            ]
+          },
+          {
+            icon: "💎",
+            title: "Max value combo",
+            subtitle: "Higher upside at max level",
+            tags: ["Higher upside", "More setup"],
+            blurb: "Worth investing into when conditions are right — and how not to erase profit with bad timing.",
+            notes: [
+              "Best for: maxed profession knowledge.",
+              "Risk: volatility / saturation."
+            ]
+          }
+        ],
+
+        worldGold: {
+          title: "World gold snapshot",
+          sub: "Total gold available from world gold quests + time/value verdict.",
+          tags: ["Time-boxed", "Context"],
+          body: "Total gold this week: ~18,200g. Verdict: only worth doing if you’re under 30k gold or need a safe baseline.",
+          bullets: [
+            "Estimated time: 75–90 minutes",
+            "Best day: early reset window",
+            "Skip if: you have profitable crafting queues ready"
+          ]
+        },
+
+        auctionHouse: {
+          title: "Auction House high-volume signal",
+          sub: "Most sold item by quantity + average value context.",
+          tags: ["High volume", "Thin margins"],
+          body: "Most-sold item (quantity): Example Item. Avg price: 210g. Action: only worth it if you already craft and can keep costs low.",
+          bullets: [
+            "Signal: high repeat demand",
+            "Risk: undercut wars / saturation",
+            "Play: small batches + strict cost ceiling"
+          ]
+        }
+      },
+
+      watch: {
+        title: "Market Watch",
+        desc: "What’s moving, what’s fading, and what to wait on.",
+        cards: [
+          {
+            title: "Surging",
+            icon: "📈",
+            tags: ["Demand spike"],
+            body: "Flasks/Phials rising around reset. Watch for a second spike on weekend playtimes.",
+            bullets: ["If crafting: raise cancel-scan discipline", "If buying: don’t chase the top"]
+          },
+          {
+            title: "Dropping",
+            icon: "📉",
+            tags: ["Oversupply"],
+            body: "Herb X oversupplied this week. Wait for a post-weekend floor before restocking.",
+            bullets: ["Avoid stocking now", "Recheck after 48h"]
+          },
+          {
+            title: "Watchlist",
+            icon: "👀",
+            tags: ["Volatile"],
+            body: "Ore Y is noisy. Wait for clear direction; don’t force trades.",
+            bullets: ["Only act with strict price rules", "No emotional buys"]
+          }
+        ]
+      },
+
+      archive: {
+        title: "Archive",
+        desc: "Past weekly drops (keep this short at first).",
+        items: [
+          { label: "Week of Dec 18, 2025 — (placeholder)", href: "#" },
+          { label: "Week of Dec 11, 2025 — (placeholder)", href: "#" }
+        ],
+        note: "Tip: later you can split weekly drops into separate files and link them here."
+      },
+
+      footerFineprint:
+        "Members hub uses a rotating monthly key. This is a fan-made informational product and is not affiliated with Blizzard Entertainment. No guarantees are made."
+    };
+
+    /* =========================================================
+       GATE LOGIC (localStorage)
+    ========================================================== */
+    const LS_KEY = "pw_member_access";
+    const $ = (id) => document.getElementById(id);
+
+    function setUnlocked(){
+      localStorage.setItem(LS_KEY, CONFIG.currentKey);
+    }
+
+    function isUnlocked(){
+      return localStorage.getItem(LS_KEY) === CONFIG.currentKey;
+    }
+
+    function lock(){
+      localStorage.removeItem(LS_KEY);
+      $("hub").style.display = "none";
+      $("topbar").style.display = "none";
+      $("gateScreen").style.display = "grid";
+      $("keyInput").value = "";
+      $("errMsg").style.display = "none";
+      $("okMsg").style.display = "none";
+    }
+
+    function showHub(){
+      $("gateScreen").style.display = "none";
+      $("topbar").style.display = "block";
+      $("hub").style.display = "block";
+    }
+
+    function tryUnlock(){
+      const val = $("keyInput").value.trim();
+      $("errMsg").style.display = "none";
+      $("okMsg").style.display = "none";
+
+      if(val === CONFIG.currentKey){
+        setUnlocked();
+        $("okMsg").style.display = "block";
+        render();
+        showHub();
+      }else{
+        $("errMsg").style.display = "block";
+      }
+    }
+
+    $("unlockBtn").addEventListener("click", tryUnlock);
+    $("keyInput").addEventListener("keydown", (e) => {
+      if(e.key === "Enter") tryUnlock();
+    });
+
+    $("logoutBtn").addEventListener("click", lock);
+
+    /* =========================================================
+       RENDER
+    ========================================================== */
+    function render(){
+      $("brandName").textContent = CONFIG.brandName;
+      $("weekPill").textContent = CONFIG.weekLabel;
+      $("discordBtn").href = CONFIG.discordInviteLink;
+      $("fineprint").textContent = CONFIG.footerFineprint;
+
+      // Weekly titles
+      $("weeklyTitle").textContent = CONFIG.weekly.title;
+      $("weeklyDesc").textContent = CONFIG.weekly.desc;
+
+      // Combos
+      $("comboGrid").innerHTML = CONFIG.weekly.combos.map(c => `
+        <div class="card">
+          <div class="combo-top">
+            <div class="ico" aria-hidden="true">${c.icon}</div>
+            <div class="meta">
+              <b>${c.title}</b>
+              <span>${c.subtitle}</span>
+              <div class="tagrow">
+                ${c.tags.map((t,i)=>`<span class="tag ${i? "alt":""}">${t}</span>`).join("")}
+              </div>
+            </div>
+          </div>
+          <p>${c.blurb}</p>
+          <ul class="list">
+            ${c.notes.map(n => `<li>${n}</li>`).join("")}
+          </ul>
+        </div>
+      `).join("");
+
+      // World gold
+      $("worldGoldTitle").textContent = CONFIG.weekly.worldGold.title;
+      $("worldGoldSub").textContent = CONFIG.weekly.worldGold.sub;
+      $("worldGoldTags").innerHTML = CONFIG.weekly.worldGold.tags.map((t,i)=>`<span class="tag ${i? "alt":""}">${t}</span>`).join("");
+      $("worldGoldBody").textContent = CONFIG.weekly.worldGold.body;
+      $("worldGoldList").innerHTML = CONFIG.weekly.worldGold.bullets.map(x=>`<li>${x}</li>`).join("");
+
+      // AH
+      $("ahTitle").textContent = CONFIG.weekly.auctionHouse.title;
+      $("ahSub").textContent = CONFIG.weekly.auctionHouse.sub;
+      $("ahTags").innerHTML = CONFIG.weekly.auctionHouse.tags.map((t,i)=>`<span class="tag ${i? "alt":""}">${t}</span>`).join("");
+      $("ahBody").textContent = CONFIG.weekly.auctionHouse.body;
+      $("ahList").innerHTML = CONFIG.weekly.auctionHouse.bullets.map(x=>`<li>${x}</li>`).join("");
+
+      // Watch
+      $("watchTitle").textContent = CONFIG.watch.title;
+      $("watchDesc").textContent = CONFIG.watch.desc;
+      $("watchGrid").innerHTML = CONFIG.watch.cards.map(w => `
+        <div class="card">
+          <div class="combo-top">
+            <div class="ico" aria-hidden="true">${w.icon}</div>
+            <div class="meta">
+              <b>${w.title}</b>
+              <span class="muted">This week</span>
+              <div class="tagrow">
+                ${w.tags.map((t,i)=>`<span class="tag ${i? "alt":""}">${t}</span>`).join("")}
+              </div>
+            </div>
+          </div>
+          <p>${w.body}</p>
+          <ul class="list">
+            ${w.bullets.map(b=>`<li>${b}</li>`).join("")}
+          </ul>
+        </div>
+      `).join("");
+
+      // Archive
+      $("archiveTitle").textContent = CONFIG.archive.title;
+      $("archiveDesc").textContent = CONFIG.archive.desc;
+      $("archiveList").innerHTML = CONFIG.archive.items.map(a => `
+        <li><a href="${a.href}">${a.label}</a></li>
+      `).join("");
+      $("archiveNote").textContent = CONFIG.archive.note;
+    }
+
+    // Boot
+    if(isUnlocked()){
+      render();
+      showHub();
+    }else{
+      // gate screen already visible
+      $("gateTitle").textContent = "Enter monthly access key";
+    }
+  </script>
+</body>
+</html>

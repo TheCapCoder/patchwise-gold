@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Access Instructions</title>
+  <meta name="description" content="Submit your details to receive access to the members hub." />
+  <meta name="robots" content="noindex,nofollow" />
+  <style>
+    :root{
+      --bg0:#070A10; --bg1:#0B1020;
+      --panel: rgba(255,255,255,0.06);
+      --stroke: rgba(255,255,255,0.12);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.70);
+      --muted2: rgba(255,255,255,0.55);
+      --shadow: 0 18px 60px rgba(0,0,0,0.55);
+      --radius: 18px;
+      --max: 980px;
+      --pad: clamp(18px, 3.2vw, 30px);
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      --accent:#6EE7FF; --accent2:#A78BFA;
+      --good:#34D399; --warn:#FBBF24;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:var(--font); color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(167,139,250,0.22), transparent 60%),
+        radial-gradient(900px 520px at 80% 18%, rgba(110,231,255,0.18), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      min-height:100vh;
+      display:flex; justify-content:center; align-items:flex-start;
+      padding: 38px var(--pad);
+    }
+    .wrap{max-width:var(--max); width:100%}
+    .card{
+      background: rgba(255,255,255,0.055);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    h1{margin:0 0 10px; font-size: clamp(1.7rem, 4.2vw, 2.2rem); letter-spacing:-0.02em;}
+    p{margin:0; color:var(--muted); line-height:1.55}
+    .row{display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-top:16px}
+    @media (max-width: 920px){ .row{grid-template-columns:1fr} }
+    .box{
+      background: rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      padding: 14px;
+    }
+    .box h2{margin:0 0 6px; font-size:1.05rem}
+    .box p{color:var(--muted2)}
+    ul{margin:10px 0 0; padding-left: 18px; color: var(--muted); line-height:1.55}
+
+    .actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:14px}
+    .btn{
+      appearance:none; border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color:var(--text);
+      padding: 12px 14px;
+      border-radius: 999px;
+      font-weight:900;
+      text-decoration:none;
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.08);}
+    .btn-primary{
+      border:none;
+      background: linear-gradient(135deg, rgba(110,231,255,0.95), rgba(167,139,250,0.95));
+      color: rgba(7,10,16,0.95);
+    }
+
+    form{margin-top:14px}
+    label{display:block; font-weight:900; margin: 12px 0 6px}
+    input, textarea{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.25);
+      color: var(--text);
+      font-weight:800;
+      outline:none;
+    }
+    input::placeholder, textarea::placeholder{color: rgba(255,255,255,0.40)}
+    textarea{min-height: 92px; resize:vertical}
+
+    .fine{margin-top:14px; color: var(--muted2); font-size:0.92rem; line-height:1.45}
+    .status{
+      margin-top: 12px;
+      font-weight: 900;
+      display:none;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+    }
+    .status.ok{display:block; border-color: rgba(52,211,153,0.35); background: rgba(52,211,153,0.10)}
+    .status.err{display:block; border-color: rgba(251,191,36,0.35); background: rgba(251,191,36,0.10)}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      font-weight:900;
+      font-size:0.85rem;
+      margin-top: 10px;
+    }
+    code{
+      background: rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);
+      padding: 2px 8px;
+      border-radius: 10px;
+      color: rgba(255,255,255,0.9);
+      font-weight: 900;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Access instructions ✅</h1>
+      <p>
+        PayPal may not redirect here automatically. After you complete PayPal checkout, come back and submit this form.
+        You’ll receive access manually by email.
+      </p>
+
+      <div class="actions">
+        <a class="btn" href="./members.html">Members Hub</a>
+        <a class="btn" href="./purchase.html">Back to Purchase</a>
+        <a class="btn" href="./index.html">Home</a>
+      </div>
+
+      <div class="row">
+        <div class="box">
+          <h2>Submit access request</h2>
+          <p>
+            This sends your details directly to us so we can verify your PayPal payment and email you the monthly key.
+          </p>
+
+          <form id="accessForm" method="POST">
+            <label for="email">Email used on PayPal</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+
+            <label for="paypal_id">PayPal Order / Transaction ID</label>
+            <input id="paypal_id" name="paypal_id" type="text" placeholder="Example: 9AB12345CD678901E" required />
+
+            <label for="discord">Discord username</label>
+            <input id="discord" name="discord" type="text" placeholder="Example: yourname" required />
+
+            <label for="note">Optional note</label>
+            <textarea id="note" name="note" placeholder="Anything we should know? (Optional)"></textarea>
+
+            <!-- Optional: helps reduce spam -->
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; align-items:center">
+              <button class="btn btn-primary" type="submit">Send request</button>
+              <span class="pill">You’ll get access by email</span>
+            </div>
+
+            <div id="statusOk" class="status ok">Sent ✅ We received your request. Check your email later for access.</div>
+            <div id="statusErr" class="status err">Something went wrong. Please try again or email us with your PayPal ID.</div>
+          </form>
+
+          <p class="fine">
+            Tip: You can find the PayPal Transaction ID in your PayPal receipt/activity. It’s usually a long string of letters and numbers.
+          </p>
+        </div>
+
+        <div class="box">
+          <h2>What you’ll receive</h2>
+          <p>After verifying payment, we’ll email you:</p>
+          <ul>
+            <li>Members hub link</li>
+            <li>Monthly access key</li>
+            <li>Discord invite link (once available)</li>
+          </ul>
+
+          <div class="pill" style="margin-top:12px">
+            Current key format example: <code>PW-JAN-2026</code>
+          </div>
+
+          <p class="fine">
+            Note: members hub uses a rotating monthly key and may be shared only with active members.
+          </p>
+        </div>
+      </div>
+
+      <p class="fine">
+        This is a fan-made informational product and is not affiliated with Blizzard Entertainment. No guarantees are made.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // 1) CREATE A FORMSPREE FORM, THEN PASTE YOUR ENDPOINT HERE:
+    // Example: https://formspree.io/f/abcdwxyz
+    const FORM_ENDPOINT = "https://formspree.io/f/xkowddje";
+
+    const form = document.getElementById("accessForm");
+    const ok = document.getElementById("statusOk");
+    const err = document.getElementById("statusErr");
+
+    form.action = FORM_ENDPOINT;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      ok.style.display = "none";
+      err.style.display = "none";
+
+      try{
+        const fd = new FormData(form);
+        const res = await fetch(FORM_ENDPOINT, {
+          method: "POST",
+          body: fd,
+          headers: { "Accept": "application/json" }
+        });
+
+        if(res.ok){
+          ok.style.display = "block";
+          form.reset();
+        }else{
+          err.style.display = "block";
+        }
+      }catch(_){
+        err.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
